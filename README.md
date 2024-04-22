@@ -5,3 +5,6 @@
 ## Original Code
 https://github.com/EdjeElectronics/OpenCV-Playing-Card-Detector
 Original repo of the code that was used to learn. Addapted for personal use.
+
+## Issues notes:
+- old notes were on notion
