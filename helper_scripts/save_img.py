@@ -1,15 +1,15 @@
-import NumberFeed as nf
-import Cards
+import feeds
+import cardsInfo as cInfo
 
 def main():
-    img = nf.VideoFeeds()
+    img = feeds.VideoFeeds()
 
     on = True
     while on:
         dict_feeds = img.feeds()
 
         for n, i in dict_feeds.items():
-            r,s = Cards.process(i)
+            r,s = cInfo.process(i)
 
             img.save_feed(n+'_rank',r)
             img.save_feed(n+'_suit',s)

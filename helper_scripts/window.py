@@ -1,13 +1,13 @@
 import tkinter as tk
 from threading import Thread
-import Cards
-import NumberFeed as nf
+import cardsInfo as cInfo
+import feeds
 from PIL import Image, ImageTk
 
 class ScaleWindow():
     def __init__(self) -> None:
         self.w = tk.Tk()
-        self.img = nf.VideoFeeds()
+        self.img = feeds.VideoFeeds()
 
         self.thresh_level = tk.Spinbox(self.w, from_=1, to=500)
         self.white_level = tk.Spinbox(self.w, from_=0, to=255)
@@ -26,7 +26,7 @@ class ScaleWindow():
     def open_camera(self) -> None:
         dict_feeds = self.img.feeds()
         for n, feed in dict_feeds.items():
-            pro = Cards.process(feed, int(self.white_level.get()),int(self.thresh_level.get()))
+            pro = cInfo.process(feed, int(self.white_level.get()),int(self.thresh_level.get()))
 
             pro_pil = Image.fromarray(pro)
             photo_image = ImageTk.PhotoImage(image=pro_pil)

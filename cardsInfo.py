@@ -84,7 +84,7 @@ def process(frame, white_level = 200, level = 1) -> CardsInfo:
             card_info.rank_img = resized_r
             card_info.suit_img = resized_s
     # return card_info.rank_img
-    return card_info.suit_img
+    # return card_info.suit_img
     return card_info
 
 def match_card(card_info, t_ranks, t_suits):
