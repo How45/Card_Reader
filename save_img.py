@@ -1,5 +1,5 @@
-import feeds
-import cardsInfo as cInfo
+import helper_scripts.cardsInfo as cInfo
+import helper_scripts.feeds as feeds
 
 def main():
     img = feeds.VideoFeeds()

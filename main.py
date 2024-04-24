@@ -1,5 +1,5 @@
-import feeds
-import cardsInfo as cInfo
+import helper_scripts.cardsInfo as cInfo
+import helper_scripts.feeds as feeds
 import os
 
 path = os.path.dirname(os.path.abspath(__file__))
@@ -23,9 +23,8 @@ def main():
             print(f"""{cards[k].best_rank_match} | {cards[k].rank_diff}
 {cards[k].best_suit_match} | {cards[k].suit_diff}
 ------------------------------------------------""")
-            k = k + 1
+            k += 1
         on = False
     # img.destroy()
-
 if __name__ == '__main__':
     main()

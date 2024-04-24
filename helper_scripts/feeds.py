@@ -2,13 +2,13 @@ import cv2
 import numpy as np
 
 IMG_BOUNDARIES = {
-    "c1" : (236,158,10,32),
-    "c2" : (271,158,10,32),
-    "c3" : (306,158,10,32),
-    "c4" : (341,158,10,32),
-    "c5" : (377,158,10,32),
-    "h1" : (290,300,10,32),
-    "h2" : (324,300,10,32)
+    "c1" : (237,157,10,32),
+    "c2" : (272,157,10,32),
+    "c3" : (307,157,10,32),
+    "c4" : (342,157,10,32),
+    "c5" : (378,157,10,32),
+    "h1" : (291,298,10,32),
+    "h2" : (324,298,10,32)
 }
 
 class VideoFeeds:
@@ -23,9 +23,9 @@ class VideoFeeds:
     def feeds(self) -> dict[np.ndarray]:
         _, frame = self.img.read()
 
-        for key in IMG_BOUNDARIES:
-            x1, y1, w1, h1 = IMG_BOUNDARIES[key]
-            self.img_feeds[key] = frame[y1: y1+h1, x1:x1+w1]
+        for n, cord in IMG_BOUNDARIES.items():
+            x1, y1, w1, h1 = cord
+            self.img_feeds[n] = frame[y1: y1+h1, x1:x1+w1]
 
         return self.img_feeds
 
