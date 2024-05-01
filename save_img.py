@@ -1,8 +1,8 @@
 import helper_scripts.cardsInfo as cInfo
-import helper_scripts.feeds as feeds
+import helper_scripts.card_feeds as card_feeds
 
 def main():
-    img = feeds.VideoFeeds()
+    img = card_feeds.VideoFeeds()
 
     on = True
     while on:

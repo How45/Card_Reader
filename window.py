@@ -1,25 +1,17 @@
 import tkinter as tk
-from threading import Thread
 from PIL import Image, ImageTk
-import helper_scripts.cardsInfo as cInfo
-import helper_scripts.feeds as feeds
-import os
-
-path = os.path.dirname(os.path.abspath(__file__))
-train_ranks = cInfo.load_ranks( path + '/train_ranks/')
-train_suits = cInfo.load_suits( path + '/train_suits/')
+import cv2
 
 class ScaleWindow():
     def __init__(self) -> None:
         self.w = tk.Tk()
-        self.img = feeds.VideoFeeds()
+        self.video_cap = cv2.VideoCapture(0)
+        self.cords = (420, 425, 113, 62)
 
-        self.thresh_level = tk.Spinbox(self.w, from_=1, to=500)
-        self.white_level = tk.Spinbox(self.w, from_=0, to=255)
-        self.label_widgets = {}
+        self.white_level = tk.Spinbox(self.w, from_=1, to=255)
+        self.status_video_cap = None
 
     def create(self) -> None:
-        self.thresh_level.pack()
         self.white_level.pack()
 
         button1 = tk.Button(self.w, text="Open Camera",
@@ -27,29 +19,31 @@ class ScaleWindow():
         button1.pack()
         self.w.mainloop()
 
+    def card_info_test(self) -> None:
+        pass
 
     def open_camera(self) -> None:
-        dict_feeds = self.img.feeds()
-        cards = []
-        k = 0
-        for n, feed in dict_feeds.items():
-            pro = cInfo.process(feed, int(self.white_level.get()),int(self.thresh_level.get()))
-            # cards.append(cInfo.process(feed, int(self.white_level.get()),int(self.thresh_level.get())))
-            # pro = cInfo.match_card(cards[-1],train_ranks,train_suits)
+        _, frame = self.video_cap.read()
 
-            pro_pil = Image.fromarray(pro)
-            photo_image = ImageTk.PhotoImage(image=pro_pil)
+        x1,y1,w1,h1 = self.cords
+        frame = frame[y1: y1+h1, x1:x1+w1]
 
-            if n not in self.label_widgets:
-                label_widget = tk.Label(self.w)
-                label_widget.pack(side="left")
-                self.label_widgets[n] = label_widget
-            else:
-                label_widget = self.label_widgets[n]
+        gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+        _, binary = cv2.threshold(gray, int(self.white_level.get()), 255, cv2.THRESH_BINARY)
 
-            label_widget.photo_image = photo_image
-            label_widget.configure(image=photo_image)
-            k += 1
+        pro_pil = Image.fromarray(binary)
+        photo_image = ImageTk.PhotoImage(image=pro_pil)
+
+        if not self.status_video_cap:
+            label_widget = tk.Label(self.w)
+            label_widget.pack()
+            self.status_video_cap = label_widget
+        else:
+            label_widget = self.status_video_cap
+
+        label_widget.photo_image = photo_image
+        label_widget.configure(image=photo_image)
+
         self.w.after(5, self.open_camera)
 
 

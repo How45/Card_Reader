@@ -2,13 +2,13 @@ import cv2
 import numpy as np
 
 IMG_BOUNDARIES = {
-    "c1" : (237,157,10,32),
-    "c2" : (272,157,10,32),
-    "c3" : (307,157,10,32),
-    "c4" : (342,157,10,32),
-    "c5" : (378,157,10,32),
-    "h1" : (291,298,10,32),
-    "h2" : (324,298,10,32)
+    "c1" : (216,158,11,30),
+    "c2" : (259,158,11,30),
+    "c3" : (302,158,11,30),
+    "c4" : (345,158,11,30),
+    "c5" : (388,158,11,30),
+    "h1" : (282,299,11,30),
+    "h2" : (323,299,11,30)
 }
 
 class VideoFeeds:
@@ -16,11 +16,7 @@ class VideoFeeds:
         self.img = cv2.VideoCapture(0)
         self.img_feeds = {}
 
-    def destroy(self) -> None:
-        self.img.release()
-        cv2.destroyAllWindows()
-
-    def feeds(self) -> dict[np.ndarray]:
+    def get_feeds(self) -> dict[np.ndarray]:
         _, frame = self.img.read()
 
         for n, cord in IMG_BOUNDARIES.items():
@@ -41,3 +37,18 @@ class VideoFeeds:
         if len(feed.shape) == 3:
             feed = cv2.cvtColor(feed, cv2.COLOR_BGR2GRAY)
         cv2.imwrite(name+'.jpg', feed)
+
+    def win_size(self) -> tuple[int, int]:
+        width = int(self.img.get(cv2.CAP_PROP_FRAME_WIDTH))
+        height = int(self.img.get(cv2.CAP_PROP_FRAME_HEIGHT))
+        return width, height
+
+    def spec_feed(self, x,y,w,h) -> np.ndarray:
+        _, frame = self.img.read()
+
+        if x and y and w and h:
+            return frame[y: y+h, x:x+w]
+
+    def destroy(self) -> None:
+        self.img.release()
+        cv2.destroyAllWindows()

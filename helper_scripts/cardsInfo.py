@@ -3,11 +3,11 @@ import cv2
 
 class CardsInfo:
     def __init__(self) -> None:
-        self.warp: list[np.ndarray] = [] # 200x300, flattened, grayed, blurred image
+        self.warp: list[np.ndarray] = [] # flattened, grayed, blurred image
         self.rank_img: list[np.ndarray] = [] # Thresholded, sized image of card's rank
         self.suit_img: list[np.ndarray] = [] # Thresholded, sized image of card's suit
-        self.best_rank_match: str = "Unknown" # Best matched rank
-        self.best_suit_match: str = "Unknown" # Best matched suit
+        self.best_rank_match: str = "Unknown" # Best rank match
+        self.best_suit_match: str = "Unknown" # Best suit match
         self.rank_diff: int = 0 # Difference between rank image and best matched train rank image
         self.suit_diff: int = 0 # Difference between suit image and best matched train suit image
 
@@ -64,7 +64,7 @@ def process(frame, thresh_level = 199) -> CardsInfo:
     card_ranks: np.ndarray = query_thresh[0:66, 0:40]
     card_suit: np.ndarray = query_thresh[65:129, 0:40]
     # return zoom_img
-    # return query_thresh
+    return query_thresh
 
     # Auto re-ajustable V
     countours_r, _ = cv2.findContours(card_ranks, cv2.RETR_TREE,cv2.CHAIN_APPROX_SIMPLE)
