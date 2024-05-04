@@ -1,12 +1,12 @@
-import helper_scripts.cardsInfo as cInfo
-import helper_scripts.card_feeds as card_feeds
+import helper_scripts.card_info as cInfo
+import helper_scripts.card_bounderies as card_bounderies
 
 def main():
-    img = card_feeds.VideoFeeds()
+    img = card_bounderies.VideoFeeds()
 
     on = True
     while on:
-        dict_feeds = img.feeds()
+        dict_feeds = img.get_feeds()
 
         for n, i in dict_feeds.items():
             r,s = cInfo.process(i)

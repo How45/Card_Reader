@@ -1,7 +1,7 @@
 import numpy as np
 import cv2
 
-class CardsInfo:
+class CardInfo:
     def __init__(self) -> None:
         self.warp: list[np.ndarray] = [] # flattened, grayed, blurred image
         self.rank_img: list[np.ndarray] = [] # Thresholded, sized image of card's rank
@@ -49,8 +49,8 @@ def load_suits(filepath) -> list[np.ndarray]:
 
     return train_suits
 
-def process(frame, thresh_level = 199) -> CardsInfo:
-    card_info = CardsInfo()
+def process(frame, thresh_level = 199) -> CardInfo:
+    card_info = CardInfo()
 
     card_info.warp = cv2.cvtColor(frame,cv2.COLOR_BGR2GRAY) # Turn frame colour to gray
     zoom_img = cv2.resize(card_info.warp, (0, 0), fx=4, fy=4) # Get resize of image with rescale increase of 4*
@@ -64,7 +64,7 @@ def process(frame, thresh_level = 199) -> CardsInfo:
     card_ranks: np.ndarray = query_thresh[0:66, 0:40]
     card_suit: np.ndarray = query_thresh[65:129, 0:40]
     # return zoom_img
-    return query_thresh
+    # return query_thresh
 
     # Auto re-ajustable V
     countours_r, _ = cv2.findContours(card_ranks, cv2.RETR_TREE,cv2.CHAIN_APPROX_SIMPLE)

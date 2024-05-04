@@ -1,7 +1,7 @@
 import tkinter as tk
 from PIL import Image, ImageTk
 
-import text_read.vision as player_feeds
+import text_read.player_bounderies as player_feeds
 
 class CordsPrint:
     def __init__(self) -> None:
